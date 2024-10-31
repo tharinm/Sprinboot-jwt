@@ -6,8 +6,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -32,14 +36,19 @@ public class ProjectSecurityConfig {
     }
 
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsManager(){
-        UserDetails admin= User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("1234")
-                .authorities("admin")
-                .build();
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsManager(){
+//        UserDetails admin= User.withDefaultPasswordEncoder()
+//                .username("admin")
+//                .password("1234")
+//                .authorities("admin")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(admin);
+//    }
 
-        return new InMemoryUserDetailsManager(admin);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(DataSource dataSource){
+//        return new JdbcUserDetailsManager(dataSource);
+//    }
 }
