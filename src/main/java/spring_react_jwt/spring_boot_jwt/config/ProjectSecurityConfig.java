@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,7 +27,7 @@ public class ProjectSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/loan/get-my-loan", "/api/auth/user").authenticated()
-                        .requestMatchers("/api/v1/notice/get-my-notice").permitAll()
+                        .requestMatchers("/api/v1/notice/get-my-notice","/api/v1/user-login/register").permitAll()
                 )
                 // Configuring form-based login
                 .formLogin(withDefaults())
@@ -51,4 +53,9 @@ public class ProjectSecurityConfig {
 //    public UserDetailsService userDetailsService(DataSource dataSource){
 //        return new JdbcUserDetailsManager(dataSource);
 //    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 }
