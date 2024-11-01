@@ -2,6 +2,8 @@ package spring_react_jwt.spring_boot_jwt.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
@@ -18,6 +20,10 @@ import javax.sql.DataSource;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true
+)
 public class ProjectSecurityConfig {
 
     @Bean
@@ -26,8 +32,8 @@ public class ProjectSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers( "/api/auth/user").hasRole("ADMIN")
-                        .requestMatchers("/api/v1/loan/get-my-loan").hasRole("USER")
+                        .requestMatchers( "/api/auth/user").authenticated()
+                        .requestMatchers("/api/v1/loan/get-my-loan").authenticated()
                         .requestMatchers("/api/v1/notice/get-my-notice","/api/v1/user-login/register").permitAll()
                 )
                 // Configuring form-based login
