@@ -26,8 +26,8 @@ public class ProjectSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers( "/api/auth/user").hasAuthority("admin")
-                        .requestMatchers("/api/v1/loan/get-my-loan").hasAuthority("user")
+                        .requestMatchers( "/api/auth/user").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/loan/get-my-loan").hasRole("USER")
                         .requestMatchers("/api/v1/notice/get-my-notice","/api/v1/user-login/register").permitAll()
                 )
                 // Configuring form-based login
